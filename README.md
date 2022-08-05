@@ -1,0 +1,1 @@
+# nodinq-readme-generator
