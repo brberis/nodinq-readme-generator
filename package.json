@@ -1,0 +1,19 @@
+{
+  "name": "nodinq-readme-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brberis/nodinq-readme-generator.git"
+  },
+  "author": "Cristobal A Barberis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brberis/nodinq-readme-generator/issues"
+  },
+  "homepage": "https://github.com/brberis/nodinq-readme-generator#readme"
+}
