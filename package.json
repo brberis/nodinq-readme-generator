@@ -2,7 +2,7 @@
   "name": "nodinq-readme-generator",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/brberis/nodinq-readme-generator/issues"
   },
-  "homepage": "https://github.com/brberis/nodinq-readme-generator#readme"
+  "homepage": "https://github.com/brberis/nodinq-readme-generator#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4"
+  }
 }
