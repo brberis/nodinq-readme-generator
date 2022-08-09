@@ -1,6 +1,11 @@
 const inquirer = require('inquirer');
 
 const propmtProject = () => {
+  console.log(`
+  ==================
+   README GENERATOR
+  ==================
+  `);
   return inquirer.prompt([
     {
       type: 'input',
@@ -29,26 +34,6 @@ const propmtProject = () => {
       }
     },
     {
-      type: 'confirm',
-      name: 'needInstallation',
-      message: 'Does the project need instalation?',
-      default: false,
-    },
-    {
-      type: 'input',
-      name: 'installation',
-      message: 'Enter instructions to install the project.', 
-      when: response => response.needInstallation,   
-      validate: installationInfo => {
-        if (installationInfo) {
-          return true;
-        } else {
-          console.log('Please enter instructions!');
-          return false;
-        }
-      }
-    },
-    {
       type: 'checkbox',
       name: 'license',
       message: 'Select project license:',
@@ -70,60 +55,63 @@ const propmtProject = () => {
     {
       type: 'confirm',
       name: 'contribution',
-      message: 'Would you like people to contrinute to this project?'
+      message: 'Would you like people to contrinute to this project?',
+      default: false
+    },
+    {
+      type: 'confirm',
+      name: 'needInstallation',
+      message: 'Does the project need instalation?',
+      default: false,
+    },
+    {
+      type: 'input',
+      name: 'installation',
+      message: 'Enter instructions to install the project.', 
+      when: response => response.needInstallation,   
+      validate: installationInfo => {
+        if (installationInfo) {
+          return true;
+        } else {
+          console.log('Please enter instructions!');
+          return false;
+        }
+      }
+    },
+    {
+      type: 'confirm',
+      name: 'credits',
+      message: 'Would you like to add contributors other than you?',
+      default: false
     }
 
   ])
-  .then(projectData => {
-    if (!projectData.needInstallation) {
-      return projectData
-    } else {
+  .then((projectData) => {
+    if (projectData.credits) {
       promptContributors(projectData)
+    } else {
+      promptBadges(projectData)
     }
   });
 }
 
+const promptContributors =  projectData => {
 
-
-
-
-
-
-// const promptCredits = projectData => {
-//   return inquirer.prompt([
-//     {
-//       type: 'confirm',
-//       name: 'credits',
-//       message: 'Would you like to add contributors other than you?',
-//       default: false
-//     }
-//   ])
-//   .then(() => {
-//     if (!projectData.credits) {
-//       return projectData
-//     } else {
-//       promptContributors(projectData)
-//     }
-//   });
-// }
-
-const promptContributors = projectData => {
   // If there's no 'contributors' array property, create one
-  if (!contributorsData.contributor) {
-    projectData.contributorsData.contributor = [];
-  }  
-  console.log(`
-  =================
-  Credits
-  =================
-  `);
-  return inquirer.prompt([
+  if (!projectData.contributors) {
+    projectData.contributors = [];
+    console.log(`
+    Contributors:
+    `);
+  }
+  
+  return  inquirer.prompt([
     {
       type: 'input',
       name: 'contributorName',
-      message: 'Enter contributor  (Required)',
-      validate: nameInput => {
-        if (nameInput) {
+      message: 'Enter contributor. (Required)',
+      validate: contributorInput => {
+        if (contributorInput) {
           return true
         }else{
           console.log('Please enter the project name!');
@@ -145,77 +133,78 @@ const promptContributors = projectData => {
     }
   ])
   .then(creditsData => {
-    projectData.contributorsData.contributor.push(creditsData);
+    projectData.contributors.push(creditsData);
     if (creditsData.confirmAddContributor) {
-      return promptContributors(contributorsData);
+      return promptContributors(projectData);
+    } else {
+      return promptBadges(projectData);
+    }
+  })  
+}
+
+const promptBadges = projectData => {
+
+  // If there's no 'badges' array property, create one
+  if (!projectData.badges) {
+    projectData.badges = [];
+    console.log(`
+    Badges:
+    `);
+  }  
+
+  return inquirer.prompt([
+    {
+      type: 'input',
+      name: 'badgeLabel',
+      message: 'Enter label. (Required)',
+      validate: labelInput => {
+        if (labelInput) {
+          return true
+        }else{
+          console.log('Please enter label!');
+          return false
+        } 
+      }
+    },
+    {
+      type: 'input',
+      name: 'badgeValue',
+      message: 'Enter value. (Required)',
+      validate: valueInput => {
+        if (valueInput) {
+          return true
+        }else{
+          console.log('Please enter value!');
+          return false
+        } 
+      }
+    },
+    {
+      type: 'checkbox',
+      name: 'badgeColor',
+      message: 'Select badge color',
+      choices: ['green', 'blue', 'grey', 'red', 'orange', 'yellow']
+    },
+    {
+      type: 'confirm',
+      name: 'confirmAddBadge',
+      message: 'Would you like to add another badge?',
+      default: false
+    }
+  ])
+  .then(badgeData => {
+    projectData.badges.push(badgeData);
+    if (badgeData.confirmAddBadge) {
+      return promptBadges(projectData);
     } else {
       return projectData;
     }
   });
 }
 
-// const promptBadges = badgesData => {
-//   // If there's no 'badges' array property, create one
-//   if (!badgesData.badge) {
-//     badgesData.badge = [];
-//   }  
-//   console.log(`
-//   =================
-//   Badges
-//   =================
-//   `);
-//   return inquirer.prompt([
-//     {
-//       type: 'input',
-//       name: 'badgeLabel',
-//       message: 'Enter label  (Required)',
-//       validate: nameInput => {
-//         if (nameInput) {
-//           return true
-//         }else{
-//           console.log('Please enter label!');
-//           return false
-//         } 
-//       }
-//     },
-//     {
-//       type: 'input',
-//       name: 'badgeValue',
-//       message: 'Enter value  (Required)',
-//       validate: nameInput => {
-//         if (nameInput) {
-//           return true
-//         }else{
-//           console.log('Please enter value!');
-//           return false
-//         } 
-//       }
-//     },
-//     {
-//       type: 'checkbox',
-//       name: 'badgeColor',
-//       message: 'Select badge color',
-//       choices: ['green', 'blue', 'grey', 'red', 'orange', 'yellow']
-//     },
-//     {
-//       type: 'confirm',
-//       name: 'confirmAddBadge',
-//       message: 'Would you like to add another contributor?',
-//       default: false
-//     }
-//   ])
-//   .then(badgeData => {
-//     badgesData.badge.push(badgeData);
-//     if (badgeData.confirmAddBadge) {
-//       return promptContributors(badgesData);
-//     } else {
-//       return badgesData;
-//     }
-//   });
-// }
-
 
 propmtProject()
-  .then(projectData => console.log(projectData))
+
+  // .then(projectData => console.log(projectData)) DONT PUT This line causing undefined error
 
   // .then(promptBadges)
