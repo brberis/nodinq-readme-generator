@@ -1,11 +1,14 @@
 const inquirer = require('inquirer');
+const generateReadme = require('./src/markdown-template');
+const { writeFile } = require('./utils/generate-readme.js');
+const project = {};
 
 const propmtProject = () => {
   console.log(`
-  ==================
-   README GENERATOR
-  ==================
-  `);
+  =================================
+   NODINQ README GENERATOR v1.0.0
+  =================================
+   `);
   return inquirer.prompt([
     {
       type: 'input',
@@ -34,10 +37,11 @@ const propmtProject = () => {
       }
     },
     {
-      type: 'checkbox',
+      type: 'list',
       name: 'license',
       message: 'Select project license:',
-      choices: ['GPLv3', 'GPLv2', 'Apache 2.0', 'BSD', 'MIT', 'None']
+      choices: ['GPLv3', 'GPLv2', 'Apache 2.0', 'BSD', 'MIT', 'None'],
+      default: 'None'
     },
     {
       type: 'input',
@@ -86,20 +90,13 @@ const propmtProject = () => {
     }
 
   ])
-  .then((projectData) => {
-    if (projectData.credits) {
-      promptContributors(projectData)
-    } else {
-      promptBadges(projectData)
-    }
-  });
 }
 
 const promptContributors =  projectData => {
 
   // If there's no 'contributors' array property, create one
-  if (!projectData.contributors) {
-    projectData.contributors = [];
+  if (!projectData.contributorsData) {
+    projectData.contributorsData = [];
     console.log(`
     Contributors:
     `);
@@ -132,21 +129,20 @@ const promptContributors =  projectData => {
       default: false
     }
   ])
-  .then(creditsData => {
-    projectData.contributors.push(creditsData);
-    if (creditsData.confirmAddContributor) {
+  .then(contributor => {
+    projectData.contributorsData.push(contributor);
+    if (projectData.contributorsData[projectData.contributorsData.length - 1].confirmAddContributor) {
       return promptContributors(projectData);
     } else {
-      return promptBadges(projectData);
+      return projectData;
     }
   })  
 }
 
 const promptBadges = projectData => {
-
   // If there's no 'badges' array property, create one
-  if (!projectData.badges) {
-    projectData.badges = [];
+  if (!projectData.badgesData) {
+    projectData.badgesData = [];
     console.log(`
     Badges:
     `);
@@ -180,10 +176,12 @@ const promptBadges = projectData => {
       }
     },
     {
-      type: 'checkbox',
+      type: 'list',
       name: 'badgeColor',
       message: 'Select badge color',
-      choices: ['green', 'blue', 'grey', 'red', 'orange', 'yellow']
+      choices: ['green', 'blue', 'lightgrey', 'red', 'orange', 'yellow'],
+      default: 'green'
+
     },
     {
       type: 'confirm',
@@ -192,9 +190,9 @@ const promptBadges = projectData => {
       default: false
     }
   ])
-  .then(badgeData => {
-    projectData.badges.push(badgeData);
-    if (badgeData.confirmAddBadge) {
+  .then(badge => {
+    projectData.badgesData.push(badge);
+    if (projectData.badgesData[projectData.badgesData.length -1].confirmAddBadge) {
       return promptBadges(projectData);
     } else {
       return projectData;
@@ -202,8 +200,76 @@ const promptBadges = projectData => {
   });
 }
 
+cons = projectData2 = {
+  projectName: 'nombre',
+  description: 'desc',
+  license: 'MIT',
+  features: 'wer',
+  contribution: true,
+  needInstallation: true,
+  installation: 'installar haci',
+  credits: true,
+  contributors: [
+    {
+      contributorName: 'juan',
+      contributorGithub: 'ewr',
+      confirmAddContributor: true
+    },
+    {
+      contributorName: 'pedro',
+      contributorGithub: 'wer',
+      confirmAddContributor: false
+    }
+  ],
+  badges: [
+    {
+      badgeLabel: 'Ver.',
+      badgeValue: '1.0.0',
+      badgeColor: 'red',
+      confirmAddBadge: false
+    },
+    {
+      badgeLabel: 'License',
+      badgeValue: 'MIT',
+      badgeColor: 'green',
+      confirmAddBadge: false
+    }
+  ]
+}
+
+//TEMPORAL
+
+    // writeFile(generateReadme(projectData, ));
+  
 
 propmtProject()
+.then((projectData) => {
+  if (projectData.credits) {
+    return promptContributors(projectData)
+  } 
+})
+.then((projectData) => {
+  return promptBadges(projectData); 
+})
+// .then((projectData) => {
+//   console.log(projectData);
+//   console.log(contributors);
+//   console.log(badges);
+
+// })
+
+// .then(projectData => {
+//   return generateReadme(projectData);
+// })
+// .then(readmeFile => {
+//   readmeFile = readmeFile;
+//   return writeFile(readmeFile);
+// })
+
+
+// .then(projectData => {
+//   console.log(generateReadme(projectData));
+// })
 
   // .then(projectData => console.log(projectData)) DONT PUT This line causing undefined error
 
