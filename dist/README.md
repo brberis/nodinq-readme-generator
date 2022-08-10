@@ -1,9 +1,27 @@
 
   [comment]: <> (This readme was medy by Nodinq Readme Generator)
   [comment]: <> (== badges ==)
-  ![alt text](https://img.shields.io/badge/Ver.-1.0.0-red)![alt text](https://img.shields.io/badge/License-MIT-green)
+  ![alt text](https://img.shields.io/badge/sdf-asd-green)
+  ![alt text](https://img.shields.io/badge/asd-aS-green)
 
+  [comment]: <> (== main ==)
+  #ewr
+
+  #Description
+  #qwe
+
+  #Installation
+  ads asd asd 
+
+  #Usage
+  asd fds fsd
+
+  ![alt text](https)
+    
+  
+  
   [comment]: <> (== contributors ==)
-    * [juan](ewr)* [pedro](wer)
+    * [asd](dsf)
+    * [asd](asd)
   
   

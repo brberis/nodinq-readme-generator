@@ -40,7 +40,7 @@ const propmtProject = () => {
       type: 'list',
       name: 'license',
       message: 'Select project license:',
-      choices: ['GPLv3', 'GPLv2', 'Apache 2.0', 'BSD', 'MIT', 'None'],
+      choices: ['None', 'GPLv3', 'GPLv2', 'Apache 2.0', 'BSD', 'MIT'],
       default: 'None'
     },
     {
@@ -84,6 +84,32 @@ const propmtProject = () => {
     },
     {
       type: 'confirm',
+      name: 'needUsage',
+      message: 'Does the project need usage information?',
+      default: false,
+    },
+    {
+      type: 'input',
+      name: 'usage',
+      message: 'Enter usage information.', 
+      when: response => response.needUsage,   
+      validate: usageInfo => {
+        if (usageInfo) {
+          return true;
+        } else {
+          console.log('Please enter usage instructions!');
+          return false;
+        }
+      }
+    },
+    {
+      type: 'input',
+      name: 'usageImage',
+      message: 'Enter usage image url', 
+      when: response => response.needUsage,   
+    },
+    {
+      type: 'confirm',
       name: 'credits',
       message: 'Would you like to add contributors other than you?',
       default: false
@@ -106,7 +132,7 @@ const promptContributors =  projectData => {
     {
       type: 'input',
       name: 'contributorName',
-      message: 'Enter contributor. (Required)',
+      message: 'Enter contributor name. (Required)',
       validate: contributorInput => {
         if (contributorInput) {
           return true
@@ -209,7 +235,7 @@ cons = projectData2 = {
   needInstallation: true,
   installation: 'installar haci',
   credits: true,
-  contributors: [
+  contributorsData: [
     {
       contributorName: 'juan',
       contributorGithub: 'ewr',
@@ -221,7 +247,7 @@ cons = projectData2 = {
       confirmAddContributor: false
     }
   ],
-  badges: [
+  badgesData: [
     {
       badgeLabel: 'Ver.',
       badgeValue: '1.0.0',
@@ -239,7 +265,7 @@ cons = projectData2 = {
 
 //TEMPORAL
 
-    // writeFile(generateReadme(projectData, ));
+    // writeFile(generateReadme(projectData2));
   
 
 propmtProject()
@@ -251,26 +277,13 @@ propmtProject()
 .then((projectData) => {
   return promptBadges(projectData); 
 })
-// .then((projectData) => {
-//   console.log(projectData);
-//   console.log(contributors);
-//   console.log(badges);
-
-// })
-
-// .then(projectData => {
-//   return generateReadme(projectData);
-// })
-// .then(readmeFile => {
-//   readmeFile = readmeFile;
-//   return writeFile(readmeFile);
-// })
 
 
-// .then(projectData => {
-//   console.log(generateReadme(projectData));
-// })
+.then(projectData => {
+  return generateReadme(projectData);
+})
+.then(readmeFile => {
+  readmeFile = readmeFile;
+  return writeFile(readmeFile);
+})
 
-  // .then(projectData => console.log(projectData)) DONT PUT This line causing undefined error
-
-  // .then(promptBadges)
