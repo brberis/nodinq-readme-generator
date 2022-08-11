@@ -16,7 +16,6 @@ Nor again is there anyone who loves or pursues or desires to obtain pain of itse
 
 ## Table of Contents
 
-- [Demo App](#demo-app)
   - [Description](#description)
   - [Screenshot](#screenshot)
   - [Table of Contents](#table-of-contents)

@@ -58,6 +58,7 @@ module.exports = markdownData => {
   ${projectData.tableOfContentsConfirm && projectData.needInstallation ? `- [Installation](#installation)` : ''}
   ${projectData.tableOfContentsConfirm && projectData.needUsage ? `- [Usage](#usage)` : ''}
   ${projectData.tableOfContentsConfirm && projectData.featuresConfirm ? `- [Features](#features)` : ''}
+  ${projectData.tableOfContentsConfirm && projectData.testIntructions ? `- [Tests](#tests)` : ''}
   ${projectData.tableOfContentsConfirm && projectData.contribution ? `- [How to Contribute](#how-to-contribute)` : ''}
   ${projectData.tableOfContentsConfirm && (projectData.developConfirm || contributorsData) ? `- [Credits](#credits)` : ''}
   ${projectData.tableOfContentsConfirm ? `- [Questions](#questions)` : ''}
