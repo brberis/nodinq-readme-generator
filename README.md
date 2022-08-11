@@ -28,7 +28,7 @@ Use the following command to run the program `node index.js`. Fill all the promp
 
 ### Watch this video
 
-[![Watch the video](https://github.com/brberis/nodinq-readme-generator/blob/main/assets/images/screenshot.png?raw=true)](https://drive.google.com/file/d/1l8E_fUCR6Aqxf3oO4TeGMH_ks16EJShi/view)
+[![Watch the video](https://github.com/brberis/nodinq-readme-generator/blob/main/assets/images/screenshot.png?raw=true)](https://drive.google.com/file/d/1l8E_fUCR6Aqxf3oO4TeGMH_ks16EJShi/view?usp=sharing)
 
 
 ## Features
