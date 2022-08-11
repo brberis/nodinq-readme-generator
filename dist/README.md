@@ -16,12 +16,17 @@ Nor again is there anyone who loves or pursues or desires to obtain pain of itse
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Features](#features)
-- [How to Contribute](#how-to-contribute)
-- [Credits](#credits)
-- [Questions](#questions)
+- [Demo App](#demo-app)
+  - [Description](#description)
+  - [Screenshot](#screenshot)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Features](#features)
+  - [Tests](#tests)
+  - [How to Contribute](#how-to-contribute)
+  - [Questions](#questions)
+  - [Credits](#credits)
 
 ## Installation
 
@@ -39,6 +44,10 @@ Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will unc
 - Professional feature
 - Some cool feature
 - Other feature
+
+## Tests
+
+Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour.
 
 ## How to Contribute
 

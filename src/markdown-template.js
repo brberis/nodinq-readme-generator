@@ -72,6 +72,9 @@ module.exports = markdownData => {
     
   ${projectData.featuresConfirm ? '## Features' : '' }
   ${projectData.featuresConfirm ? generateFeatures(featuresData): '' }
+
+  ${projectData.testIntructions ? '## Tests' : '' }
+  ${projectData.testIntructions ? projectData.testIntructions : '' }
   
   ${projectData.contribution ? '## How to Contribute' : '' }
   ${projectData.contribution ? `We welcome contributions to ${projectData.projectName} on Github. When contributing, please follow our Community Code of Conduct.` : '' }
