@@ -26,6 +26,11 @@ To run this application clone the repository. You must have Node.js (https://nod
 
 Use the following command to run the program `node index.js`. Fill all the prompts necessary to create a complete  README file. I you have screenshots be sure that they are uploaded in your repository.
 
+### Watch this video
+
+[![Watch the video](https://github.com/brberis/nodinq-readme-generator/blob/main/assets/images/screenshot.png?raw=true)](https://drive.google.com/file/d/1l8E_fUCR6Aqxf3oO4TeGMH_ks16EJShi/view)
+
+
 ## Features
 
 - Create custom badges.
