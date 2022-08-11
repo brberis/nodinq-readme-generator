@@ -31,6 +31,32 @@ const propmtProject = () => {
     },
     {
       type: 'input',
+      name: 'githubUserName',
+      message: 'Enter your GitHub: (Required)',
+      validate: githubNameInput => {
+        if (githubNameInput) {
+          return true
+        }else{
+          console.log('Please enter your GitHun username!');
+          return false
+        } 
+      }
+    },
+    {
+      type: 'input',
+      name: 'email',
+      message: 'Enter your email: (Required)',
+      validate: emailInput => {
+        if (emailInput) {
+          return true
+        }else{
+          console.log('Please enter your email!');
+          return false
+        } 
+      }
+    },
+    {
+      type: 'input',
       name: 'projectName',
       message: 'Enter the project name: (Required)',
       validate: nameInput => {
@@ -156,7 +182,13 @@ const propmtProject = () => {
       name: 'usageImage',
       message: 'Enter usage image URL: (Optional)', 
       when: response => response.needUsage,   
-    }
+    },
+    {
+      type: 'input',
+      name: 'testIntructions',
+      message: 'Enter test instructions: (Optional)', 
+      when: response => response.needInstallation,   
+    },
   ])
 }
 

@@ -60,6 +60,7 @@ module.exports = markdownData => {
   ${projectData.tableOfContentsConfirm && projectData.featuresConfirm ? `- [Features](#features)` : ''}
   ${projectData.tableOfContentsConfirm && projectData.contribution ? `- [How to Contribute](#how-to-contribute)` : ''}
   ${projectData.tableOfContentsConfirm && (projectData.developConfirm || contributorsData) ? `- [Credits](#credits)` : ''}
+  ${projectData.tableOfContentsConfirm ? `- [Questions](#questions)` : ''}
 
   ${projectData.needInstallation ? '## Installation' : '' }
   ${projectData.needInstallation ? projectData.installation : '' }
@@ -75,6 +76,10 @@ module.exports = markdownData => {
   ${projectData.contribution ? '## How to Contribute' : '' }
   ${projectData.contribution ? `We welcome contributions to ${projectData.projectName} on Github. When contributing, please follow our Community Code of Conduct.` : '' }
   
+  ## Questions
+
+  Please send your questions [here](mailto:${projectData.email}?subject=[GitHub]%20${projectData.projectName.split(' ').join('%20')}) or visit [github/${projectData.githubUserName}](https://github.com/${projectData.githubUserName}). 
+
   ${projectData.developConfirm || contributorsData ? '## Credits' : ''}
 
   ${projectData.developConfirm ? '* ' + projectData.userName : ''}
