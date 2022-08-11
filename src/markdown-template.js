@@ -52,7 +52,7 @@ module.exports = markdownData => {
   ${projectData.descriptionLearn ? projectData.descriptionLearn : ''} 
 
   ${projectData.screenshot ? `## Screenshot` : '' }
-  ${projectData.screenshot ? `![alt text](${projectData.screenshot})` : '' }
+  ${projectData.screenshot ? `![alt screenshot](${projectData.screenshot})` : '' }
 
   ${projectData.tableOfContentsConfirm ? `## Table of Contents` : ''}
   ${projectData.tableOfContentsConfirm && projectData.needInstallation ? `- [Installation](#installation)` : ''}
@@ -67,7 +67,7 @@ module.exports = markdownData => {
   ${projectData.needUsage ? '## Usage' : '' }
   ${projectData.needUsage ? projectData.usage : '' }
 
-  ${projectData.usageImage ? `![alt text](${projectData.usageImage})` : '' }
+  ${projectData.usageImage ? `![alt usage](${projectData.usageImage})` : '' }
     
   ${projectData.featuresConfirm ? '## Features' : '' }
   ${projectData.featuresConfirm ? generateFeatures(featuresData): '' }
