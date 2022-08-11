@@ -11,6 +11,10 @@ const writeFile = fileContent => {
       // add breakline before #
       subst = "\n$&";
       fileContent = fileContent.replace(regex, subst);
+      // add breakline before usage image
+      regex = /!\[alt usage\].*/g;
+      subst = "\n$&";
+      fileContent = fileContent.replace(regex, subst);
       fs.writeFile('./dist/README.md', fileContent, err => {
         // if there's an error, reject the Promise and send the error to the Promise's `.catch()` method
         if (err) {
