@@ -7,11 +7,21 @@ const generateLicenseBadge = license => {
 const generateBadges = badges => {
   return `${badges.map(({badgeLabel, badgeValue, badgeColor}) => {
   // identation will create a space
-  return `![alt text](https://img.shields.io/badge/${badgeLabel}-${badgeValue}-${badgeColor})` 
+  return `![alt text](https://img.shields.io/badge/${badgeLabel.replace(/\s+/g, ' ').trim()}-${badgeValue.replace(/\s+/g, ' ').trim()}-${badgeColor})` 
   })
   .join(`
   `)}
   `}
+
+// features section
+const generateFeatures = features => {  
+  return `${features.map(({feature}) => {
+    return `${feature ? `- ` + feature : ''}`
+    })
+    .join(`
+  `)}
+  `;
+}
 
 // author section
 const generateCreddits = contributors => {  
@@ -25,7 +35,7 @@ const generateCreddits = contributors => {
 
 module.exports = markdownData => {
   // destructure page data by section
-  const { license, badgesData, contributorsData, ...projectData } = markdownData;
+  const { license, badgesData, featuresData, contributorsData, ...projectData } = markdownData;
   return `
   [comment]: <> (This readme was created by Nodinq Readme Generator)
 
@@ -35,14 +45,21 @@ module.exports = markdownData => {
   # ${projectData.projectName}
 
   ## Description 
-  ${projectData.description}
+  ${projectData.descriptionIntro}
+  ${projectData.descriptionMotivation ? projectData.descriptionMotivation : ''} 
+  ${projectData.descriptionWhy ? projectData.descriptionWhy : ''} 
+  ${projectData.descriptionWhatSolve ? projectData.descriptionWhatSolve : ''} 
+  ${projectData.descriptionLearn ? projectData.descriptionLearn : ''} 
 
-  ${projectData.needInstallation ? `
-  ## Table of Contents
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Credits](#credits)
-  ` : `` } 
+  ${projectData.screenshot ? `## Screenshot` : '' }
+  ${projectData.screenshot ? `![alt text](${projectData.screenshot})` : '' }
+
+  ${projectData.tableOfContentsConfirm ? `## Table of Contents` : ''}
+  ${projectData.tableOfContentsConfirm && projectData.needInstallation ? `- [Installation](#installation)` : ''}
+  ${projectData.tableOfContentsConfirm && projectData.needUsage ? `- [Usage](#usage)` : ''}
+  ${projectData.tableOfContentsConfirm && projectData.featuresConfirm ? `- [Features](#features)` : ''}
+  ${projectData.tableOfContentsConfirm && projectData.contribution ? `- [How to Contribute](#how-to-contribute)` : ''}
+  ${projectData.tableOfContentsConfirm && (projectData.developConfirm || contributorsData) ? `- [Credits](#credits)` : ''}
 
   ${projectData.needInstallation ? '## Installation' : '' }
   ${projectData.needInstallation ? projectData.installation : '' }
@@ -52,17 +69,15 @@ module.exports = markdownData => {
 
   ${projectData.usageImage ? `![alt text](${projectData.usageImage})` : '' }
     
-  ${projectData.features > 0 ? '## Features' : '' }
-  ${projectData.features > 0 ? projectData.features : '' }
+  ${projectData.featuresConfirm ? '## Features' : '' }
+  ${projectData.featuresConfirm ? generateFeatures(featuresData): '' }
   
   ${projectData.contribution ? '## How to Contribute' : '' }
   ${projectData.contribution ? `We welcome contributions to ${projectData.projectName} on Github. When contributing, please follow our Community Code of Conduct.` : '' }
   
-  ## Authors
+  ${projectData.developConfirm || contributorsData ? '## Credits' : ''}
 
-  Contributors names:
-
-  * ${projectData.userName}
+  ${projectData.developConfirm ? '* ' + projectData.userName : ''}
   ${contributorsData ? generateCreddits(contributorsData) : ''}
   `;
 }

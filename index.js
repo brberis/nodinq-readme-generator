@@ -10,9 +10,16 @@ const propmtProject = () => {
    `);
   return inquirer.prompt([
     {
+      type: 'confirm',
+      name: 'developConfirm',
+      message: 'Did you develop this project?',
+      default: true
+    },
+    {
       type: 'input',
       name: 'userName',
-      message: 'Enter your name (Required):',
+      message: 'Enter your name: (Required)',
+      when: response => response.developConfirm,   
       validate: nameInput => {
         if (nameInput) {
           return true
@@ -25,7 +32,7 @@ const propmtProject = () => {
     {
       type: 'input',
       name: 'projectName',
-      message: 'Enter the project name (Required):',
+      message: 'Enter the project name: (Required)',
       validate: nameInput => {
         if (nameInput) {
           return true
@@ -37,36 +44,66 @@ const propmtProject = () => {
     },
     {
       type: 'input',
-      name: 'description',
-      message: 'Provide a description of the project (Required):',
+      name: 'descriptionIntro',
+      message: 'Provide the description introduction of the project: (Required)',
       validate: nameInput => {
         if (nameInput) {
           return true;
         } else {
-          console.log('Please enter description!');
+          console.log('Please enter description introduction!');
           return false;
         }
       }
+    },
+    {
+      type: 'input',
+      name: 'descriptionMotivation',
+      message: 'What was your motivation? (Optional)',
+    },
+    {
+      type: 'input',
+      name: 'descriptionWhy',
+      message: 'Why did you build this project? (Optional)',
+    },
+    {
+      type: 'input',
+      name: 'descriptionWhatSolve',
+      message: 'What problem does it solve? (Optional)',
+    },
+    {
+      type: 'input',
+      name: 'descriptionLearn',
+      message: 'What did you learn? (Optional)',
+    },
+    {
+      type: 'input',
+      name: 'screenshot',
+      message: 'Add s screenshot URL: (Optional)',
     },
     {
       type: 'list',
       name: 'license',
       message: 'Select project license:',
-      choices: ['None', 'GPLv3', 'GPLv2', 'Apache 2.0', 'BSD', 'MIT'],
+      choices: ['None', 'GPLv3', 'GPLv2', 'Apache2.0', 'BSD', 'MIT'],
       default: 'None'
     },
     {
-      type: 'input',
-      name: 'features',
-      message: 'Provide features for this project (Required):',
-      validate: nameInput => {
-        if (nameInput) {
-          return true;
-        } else {
-          console.log('Please enter features!');
-          return false;
-        }
-      }
+      type: 'confirm',
+      name: 'tableOfContentsConfirm',
+      message: 'Would you like to add table of contents?',
+      default: false
+    },
+    {
+      type: 'confirm',
+      name: 'featuresConfirm',
+      message: 'Would you like to add features?',
+      default: false
+    },
+    {
+      type: 'confirm',
+      name: 'credits',
+      message: 'Would you like to add contributors?',
+      default: false
     },
     {
       type: 'confirm',
@@ -117,17 +154,51 @@ const propmtProject = () => {
     {
       type: 'input',
       name: 'usageImage',
-      message: 'Enter usage image URL (Optional):', 
+      message: 'Enter usage image URL: (Optional)', 
       when: response => response.needUsage,   
+    }
+  ])
+}
+
+const promptFeatures =  projectData => {
+
+  // If there's no 'features' array property, create one
+  if (!projectData.featuresData) {
+    projectData.featuresData = [];
+    console.log(`
+    Features:
+    `);
+  }
+  
+  return  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'feature',
+      message: 'Enter feature: (Required)',
+      validate: featureInput => {
+        if (featureInput) {
+          return true
+        }else{
+          console.log('Please enter feature!');
+          return false
+        } 
+      }
     },
     {
       type: 'confirm',
-      name: 'credits',
-      message: 'Would you like to add contributors other than you?',
+      name: 'confirmAddFeature',
+      message: 'Would you like to add another feature?',
       default: false
     }
-
   ])
+  .then(feature => {
+    projectData.featuresData.push(feature);
+    if (projectData.featuresData[projectData.featuresData.length - 1].confirmAddFeature) {
+      return promptFeatures(projectData);
+    } else {
+      return projectData;
+    }
+  })  
 }
 
 const promptContributors =  projectData => {
@@ -144,12 +215,12 @@ const promptContributors =  projectData => {
     {
       type: 'input',
       name: 'contributorName',
-      message: 'Enter contributor name (Required):',
+      message: 'Enter contributor name: (Required)',
       validate: contributorInput => {
         if (contributorInput) {
           return true
         }else{
-          console.log('Please enter the project name!');
+          console.log('Please enter contributor name!');
           return false
         } 
       }
@@ -157,7 +228,7 @@ const promptContributors =  projectData => {
     {
       type: 'input',
       name: 'contributorGithub',
-      message: 'Enter contributor GitHub (Optional):',
+      message: 'Enter contributor GitHub: (Optional)',
     },
     {
       type: 'confirm',
@@ -189,7 +260,7 @@ const promptBadges = projectData => {
     {
       type: 'input',
       name: 'badgeLabel',
-      message: 'Enter label (Required):',
+      message: 'Enter label: (Required)',
       validate: labelInput => {
         if (labelInput) {
           return true
@@ -202,7 +273,7 @@ const promptBadges = projectData => {
     {
       type: 'input',
       name: 'badgeValue',
-      message: 'Enter value (Required):',
+      message: 'Enter value: (Required)',
       validate: valueInput => {
         if (valueInput) {
           return true
@@ -240,6 +311,13 @@ const promptBadges = projectData => {
 // function call
 propmtProject()
 .then((projectData) => {
+  if (projectData.featuresConfirm) {
+    return promptFeatures(projectData)
+  } else {
+    return projectData;
+  }
+})
+.then((projectData) => {
   if (projectData.credits) {
     return promptContributors(projectData)
   } else {
@@ -255,6 +333,9 @@ propmtProject()
 .then(readmeFile => {
   readmeFile = readmeFile;
   return writeFile(readmeFile);
+})
+.then(result => {
+  console.log(result.message);
 })
 .catch(err => {
   console.log(err);
